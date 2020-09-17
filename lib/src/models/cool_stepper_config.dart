@@ -41,6 +41,11 @@ class CoolStepperConfig {
   /// Progress labels that when supplied will override 'backText' and 'nextText', must equal the number of steps
   final List<String> progLabels;
 
+  /// The text that should be displayed for the prev button on the first step, if provided will override 'backText'. It's meant to be combined with CoolStepper's 'onBackFirstStep' callback
+  ///
+  /// default is 'CANCEL'
+  final String cancelText;
+
   /// The text that should be displayed for the next button on the final step
   ///
   /// default is 'FINISH'
@@ -57,5 +62,6 @@ class CoolStepperConfig {
       this.titleTextStyle,
       this.subtitleTextStyle,
       this.progLabels,
+      this.cancelText,
       this.finalText});
 }

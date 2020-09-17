@@ -12,6 +12,12 @@ import 'package:flutter/material.dart';
 class CoolStepper extends StatefulWidget {
   final List<CoolStep> steps;
   final VoidCallback onCompleted;
+
+  /// Executed when pressing back while on the first step
+  final VoidCallback onBackFirstStep;
+
+  /// Executed when changing between steps
+  final Function(int) onStepChange;
   final EdgeInsetsGeometry contentPadding;
   final CoolStepperConfig config;
 
@@ -19,9 +25,17 @@ class CoolStepper extends StatefulWidget {
     Key key,
     @required this.steps,
     @required this.onCompleted,
+    this.onBackFirstStep,
+    this.onStepChange,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 20.0),
     this.config = const CoolStepperConfig(
-        backText: "PREV", nextText: "NEXT", stepText: "STEP", ofText: "OF", finalText: "FINISH", progLabels: null),
+        backText: "PREV",
+        nextText: "NEXT",
+        stepText: "STEP",
+        ofText: "OF",
+        cancelText: 'CANCEL',
+        finalText: "FINISH",
+        progLabels: null),
   }) : super(key: key);
 
   @override
@@ -65,6 +79,9 @@ class _CoolStepperState extends State<CoolStepper> {
         });
         FocusScope.of(context).unfocus();
         switchToPage(currentStep);
+        if (widget.onStepChange != null) {
+          widget.onStepChange(currentStep);
+        }
       } else {
         widget.onCompleted();
       }
@@ -78,7 +95,16 @@ class _CoolStepperState extends State<CoolStepper> {
       setState(() {
         currentStep--;
       });
+      if (widget.onStepChange != null) {
+        widget.onStepChange(currentStep);
+      }
       switchToPage(currentStep);
+    } else {
+      if (widget.onBackFirstStep != null) {
+        widget.onBackFirstStep();
+      } else {
+        return null;
+      }
     }
   }
 
@@ -125,14 +151,13 @@ class _CoolStepperState extends State<CoolStepper> {
       String backLabel;
       if (widget.config.progLabels != null) {
         if (_isFirst(currentStep)) {
-          backLabel = '';
+          backLabel = widget.config.cancelText ?? 'CANCEL';
         } else {
           backLabel = widget.config.progLabels[currentStep - 1];
         }
       } else {
         backLabel = widget.config.backText ?? 'PREV';
       }
-
       return backLabel;
     }
 

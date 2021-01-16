@@ -4,6 +4,11 @@ class CoolStepperConfig {
   /// The text that should be displayed for the back button
   ///
   /// default is 'BACK'
+  final int initialStep;
+
+  /// The text that should be displayed for the back button
+  ///
+  /// default is 'BACK'
   final String backText;
 
   /// The text that should be displayed for the next button
@@ -51,17 +56,25 @@ class CoolStepperConfig {
   /// default is 'FINISH'
   final String finalText;
 
-  const CoolStepperConfig(
-      {this.backText,
-      this.nextText,
-      this.stepText,
-      this.ofText,
-      this.headerColor,
-      this.iconColor,
-      this.icon,
-      this.titleTextStyle,
-      this.subtitleTextStyle,
-      this.progLabels,
-      this.cancelText,
-      this.finalText});
+  /// Hides the top right icon
+  ///
+  /// default is 'FINISH'
+  final bool noIcon;
+
+  const CoolStepperConfig({
+    this.initialStep,
+    this.backText,
+    this.nextText,
+    this.stepText,
+    this.ofText,
+    this.headerColor,
+    this.iconColor,
+    this.icon,
+    this.titleTextStyle,
+    this.subtitleTextStyle,
+    this.progLabels,
+    this.cancelText,
+    this.finalText,
+    this.noIcon,
+  });
 }

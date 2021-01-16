@@ -23,8 +23,7 @@ class CoolStepperView extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: config.headerColor ??
-            Theme.of(context).primaryColor.withOpacity(0.1),
+        color: config.headerColor ?? Theme.of(context).primaryColor.withOpacity(0.1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,14 +46,16 @@ class CoolStepperView extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 5.0),
-              Visibility(
-                  visible: config.icon == null,
-                  child: Icon(
-                    Icons.help_outline,
-                    size: 18,
-                    color: config.iconColor ?? Colors.black38,
-                  ),
-                  replacement: config.icon ?? Container())
+              config.noIcon
+                  ? Container()
+                  : Visibility(
+                      visible: config.icon == null,
+                      child: Icon(
+                        Icons.help_outline,
+                        size: 18,
+                        color: config.iconColor ?? Colors.black38,
+                      ),
+                      replacement: config.icon ?? Container())
             ],
           ),
           SizedBox(height: 5.0),

@@ -29,6 +29,12 @@ class CoolStepperConfig {
   /// This is the background color of the header
   final Color headerColor;
 
+  /// This is the background color of the header
+  final Color backgroundColor;
+
+  /// This is the background color of the header
+  final Color contentColor;
+
   /// This is the color of the icon
   ///
   /// [This does not apply when icon is set]
@@ -68,6 +74,8 @@ class CoolStepperConfig {
     this.stepText,
     this.ofText,
     this.headerColor,
+    this.backgroundColor,
+    this.contentColor,
     this.iconColor,
     this.icon,
     this.titleTextStyle,

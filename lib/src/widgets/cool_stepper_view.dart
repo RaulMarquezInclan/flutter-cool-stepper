@@ -73,13 +73,17 @@ class CoolStepperView extends StatelessWidget {
     );
 
     final content = Expanded(
-      child: SingleChildScrollView(
-        padding: contentPadding,
-        child: step.content,
+      child: Container(
+        color: config.contentColor ?? Colors.transparent,
+        child: SingleChildScrollView(
+          padding: contentPadding,
+          child: step.content,
+        ),
       ),
     );
 
     return Container(
+      color: config.backgroundColor ?? Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [title, content],

@@ -2,10 +2,10 @@ library cool_stepper;
 
 export 'package:cool_stepper/src/models/cool_step.dart';
 export 'package:cool_stepper/src/models/cool_stepper_config.dart';
-
 import 'package:cool_stepper/src/models/cool_step.dart';
 import 'package:cool_stepper/src/models/cool_stepper_config.dart';
 import 'package:cool_stepper/src/widgets/cool_stepper_view.dart';
+import 'package:monopoly_saver/app/theme/monopoly_colors.dart';
 import 'package:flutter/material.dart';
 
 /// CoolStepper
@@ -17,7 +17,7 @@ class CoolStepper extends StatefulWidget {
   final VoidCallback onBackFirstStep;
 
   /// Executed when changing between steps
-  final Function(int) onStepChange;
+  final Function(int, bool) onStepChange;
   final EdgeInsetsGeometry contentPadding;
   final CoolStepperConfig config;
 
@@ -43,9 +43,24 @@ class CoolStepper extends StatefulWidget {
 }
 
 class _CoolStepperState extends State<CoolStepper> {
-  PageController _controller = PageController();
+  PageController _controller;
 
   int currentStep = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.config.initialStep != null) {
+      if (widget.config.initialStep > widget.steps.length) {
+        throw 'initialStep cannot be greater than the number of steps (${widget.config.initialStep > widget.steps.length})';
+      } else {
+        _controller = PageController(initialPage: widget.config.initialStep);
+      }
+    } else {
+      _controller = PageController();
+    }
+  }
 
   @override
   void dispose() {
@@ -80,7 +95,7 @@ class _CoolStepperState extends State<CoolStepper> {
         FocusScope.of(context).unfocus();
         switchToPage(currentStep);
         if (widget.onStepChange != null) {
-          widget.onStepChange(currentStep);
+          widget.onStepChange(currentStep, true);
         }
       } else {
         widget.onCompleted();
@@ -96,7 +111,7 @@ class _CoolStepperState extends State<CoolStepper> {
         currentStep--;
       });
       if (widget.onStepChange != null) {
-        widget.onStepChange(currentStep);
+        widget.onStepChange(currentStep, false);
       }
       switchToPage(currentStep);
     } else {
@@ -111,24 +126,27 @@ class _CoolStepperState extends State<CoolStepper> {
   @override
   Widget build(BuildContext context) {
     final content = Expanded(
-      child: PageView(
-        controller: _controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: widget.steps.map((step) {
-          return CoolStepperView(
-            step: step,
-            contentPadding: widget.contentPadding,
-            config: widget.config,
-          );
-        }).toList(),
+      child: Container(
+        child: PageView(
+          controller: _controller,
+          physics: NeverScrollableScrollPhysics(),
+          children: widget.steps.map((step) {
+            return CoolStepperView(
+              step: step,
+              contentPadding: widget.contentPadding,
+              config: widget.config,
+            );
+          }).toList(),
+        ),
       ),
     );
 
     final counter = Container(
       child: Text(
-        "${widget.config.stepText ?? 'STEP'} ${currentStep + 1} ${widget.config.ofText ?? 'OF'} ${widget.steps.length}",
+        "${widget.config.stepText ?? 'step'} ${currentStep + 1} ${widget.config.ofText ?? 'of'} ${widget.steps.length}",
         style: TextStyle(
           fontWeight: FontWeight.bold,
+          color: MonopolyColors.tileTextColor,
         ),
       ),
     );
@@ -169,7 +187,9 @@ class _CoolStepperState extends State<CoolStepper> {
             onPressed: onStepBack,
             child: Text(
               getPrevLabel(),
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: MonopolyColors.tileTextColor,
+              ),
             ),
           ),
           counter,
@@ -178,7 +198,7 @@ class _CoolStepperState extends State<CoolStepper> {
             child: Text(
               getNextLabel(),
               style: TextStyle(
-                color: Colors.green,
+                color: MonopolyColors.tileTextColor,
               ),
             ),
           ),
@@ -187,6 +207,7 @@ class _CoolStepperState extends State<CoolStepper> {
     );
 
     return Container(
+      color: MonopolyColors.trueBlue,
       child: Column(
         children: [content, buttons],
       ),

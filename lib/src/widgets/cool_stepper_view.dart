@@ -33,7 +33,6 @@ class CoolStepperView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width * 0.8,
                 child: Text(
                   step.title.toUpperCase(),
                   style: config.titleTextStyle ??
@@ -55,7 +54,8 @@ class CoolStepperView extends StatelessWidget {
                         size: 18,
                         color: config.iconColor ?? Colors.black38,
                       ),
-                      replacement: config.icon ?? Container())
+                      replacement: config.icon ?? Container(),
+                    )
             ],
           ),
           SizedBox(height: 5.0),
@@ -72,22 +72,16 @@ class CoolStepperView extends StatelessWidget {
       ),
     );
 
-    final content = Expanded(
-      child: Container(
-        color: config.contentColor ?? Colors.transparent,
-        child: SingleChildScrollView(
-          padding: contentPadding,
-          child: step.content,
-        ),
-      ),
+    final content = Container(
+      padding: contentPadding,
+      child: step.content,
     );
 
     return Container(
       color: config.backgroundColor ?? Colors.transparent,
-      padding: contentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [title, step.content],
+        children: [title, content],
       ),
     );
   }

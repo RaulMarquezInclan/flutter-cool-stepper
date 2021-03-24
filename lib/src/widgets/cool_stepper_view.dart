@@ -84,6 +84,7 @@ class CoolStepperView extends StatelessWidget {
 
     return Container(
       color: config.backgroundColor ?? Colors.transparent,
+      padding: contentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [title, step.content],

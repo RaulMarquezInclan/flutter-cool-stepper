@@ -147,6 +147,7 @@ class _CoolStepperState extends State<CoolStepper> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: MonopolyColors.tileTextColor,
+          fontSize: 3.5.w,
         ),
       ),
     );
@@ -190,6 +191,7 @@ class _CoolStepperState extends State<CoolStepper> {
               getPrevLabel(),
               style: TextStyle(
                 color: MonopolyColors.tileTextColor,
+                fontSize: 3.5.w,
               ),
             ),
           ),
@@ -200,6 +202,7 @@ class _CoolStepperState extends State<CoolStepper> {
               getNextLabel(),
               style: TextStyle(
                 color: MonopolyColors.tileTextColor,
+                fontSize: 3.5.w,
               ),
             ),
           ),

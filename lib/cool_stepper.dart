@@ -180,6 +180,7 @@ class _CoolStepperState extends State<CoolStepper> {
     }
 
     final buttons = Container(
+      height: 12.0.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

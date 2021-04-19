@@ -20,7 +20,8 @@ class CoolStepperView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = Container(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
+      height: 27.0.w,
       padding: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: config.headerColor ?? Theme.of(context).primaryColor.withOpacity(0.1),
@@ -33,37 +34,27 @@ class CoolStepperView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
+                // color: Colors.cyan,
+                width: 88.0.w,
                 child: Text(
                   step.title.toUpperCase(),
                   style: config.titleTextStyle ??
                       TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 4.3.w,
                         fontWeight: FontWeight.bold,
                         color: Colors.black38,
                       ),
                   maxLines: 2,
                 ),
               ),
-              SizedBox(width: 5.0),
-              config.noIcon
-                  ? Container()
-                  : Visibility(
-                      visible: config.icon == null,
-                      child: Icon(
-                        Icons.help_outline,
-                        size: 18,
-                        color: config.iconColor ?? Colors.black38,
-                      ),
-                      replacement: config.icon ?? Container(),
-                    )
             ],
           ),
-          SizedBox(height: 5.0),
+          SizedBox(height: 2.0.w),
           Text(
             step.subtitle,
             style: config.subtitleTextStyle ??
                 TextStyle(
-                  fontSize: 14.0,
+                  fontSize: 3.5.w,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -79,6 +70,7 @@ class CoolStepperView extends StatelessWidget {
 
     return Container(
       color: config.backgroundColor ?? Colors.transparent,
+      // color: Colors.green,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [title, content],
